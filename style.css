@@ -70,3 +70,53 @@ h5 {font-size: var(--h5-text);}
 }
 
 ul {list-style-type: none;}
+
+nav {
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+
+.navbar-title {
+    margin-left: 200px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: var(--h2-text);
+}
+.container-tic-tac {
+    display: flex;
+    justify-content: center;
+}
+
+.tic-tac-grid {
+    display: grid;
+    width: 600px;
+    height: 600px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.case {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+    font-size: 10rem;
+}
+
+.case:nth-child(1), .case:nth-child(2), .case:nth-child(3){
+    border-bottom: 4px solid black;
+}
+
+.case:nth-child(4), .case:nth-child(5), .case:nth-child(6){
+    border-bottom: 4px solid black;
+}
+
+.case:nth-child(1), .case:nth-child(4), .case:nth-child(7){
+    border-right: 4px solid black;
+}
+
+.case:nth-child(2), .case:nth-child(5), .case:nth-child(8){
+    border-right: 4px solid black;
+}
