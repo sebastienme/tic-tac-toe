@@ -105,6 +105,11 @@ nav {
     font-size: 10rem;
 }
 
+.case:hover {
+    cursor: pointer;
+    background-color: rgb(143, 191, 255);
+}
+
 .case:nth-child(1), .case:nth-child(2), .case:nth-child(3){
     border-bottom: 4px solid black;
 }
