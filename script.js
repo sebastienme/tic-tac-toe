@@ -18,13 +18,30 @@ const gameBoard = (() => {
     }
 
     const playerTurn = (currentPlayer, nextPlayer) => {
+        const token = currentPlayer.getToken();
+
         domElements.selectors('.case').forEach((element) => {
             element.addEventListener('click', () => {
-                element.innerHTML = currentPlayer.getToken();
-                console.log("hello")
-                playerTurn(nextPlayer, currentPlayer)
+                if (element.innerHTML == "") {
+                    element.innerHTML = token;
+                    board[element.dataset.id] = token;
+                    validateBoard(nextPlayer, currentPlayer);
+                    console.log(board)
+                } else {
+                    console.log("alert")
+                    const alert = domElements.selector('.alert');
+                    alert.innerHTML = 'Choisis une autre case';
+                    alert.classList.remove('invisible')
+                }
             })
         })
+    }
+
+    const validateBoard = (currentPlayer, nextPlayer) => {
+        
+        
+        
+        playerTurn(currentPlayer, nextPlayer)
     }
 
     // Event listeners 
