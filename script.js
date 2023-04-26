@@ -14,6 +14,17 @@ const gameBoard = (() => {
     const createPlayers = () => {
         const player1 = Player('x');
         const player2 = Player('o');
+        playerTurn(player1, player2)
+    }
+
+    const playerTurn = (currentPlayer, nextPlayer) => {
+        domElements.selectors('.case').forEach((element) => {
+            element.addEventListener('click', () => {
+                element.innerHTML = currentPlayer.getToken();
+                console.log("hello")
+                playerTurn(nextPlayer, currentPlayer)
+            })
+        })
     }
 
     // Event listeners 
