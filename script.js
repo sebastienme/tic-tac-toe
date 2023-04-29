@@ -1,3 +1,4 @@
+//Player object that create a player and return the token to display on the board
 const Player = (token) => {
    
     const getToken = () => token;
@@ -5,8 +6,9 @@ const Player = (token) => {
     return {getToken};
 }
 
-
+//factory function that has all the game logic
 const gameBoard = (() => {
+    //initialise function variable
     let player1;
     let player2;
     let marker;
@@ -23,6 +25,7 @@ const gameBoard = (() => {
         activateBoard();
     }
 
+    //function that change the marker on each player's turn 
     const updateMarker = () => {
         if (marker == player1) {
             marker = player2
@@ -31,6 +34,7 @@ const gameBoard = (() => {
         }
     }
 
+    //function that validate each of the possible winning combination of the game
     const validateBoard = () => {
         let boardWin = false;
 
@@ -45,6 +49,7 @@ const gameBoard = (() => {
             [2, 4, 6]
         ];
 
+        //funtion that takes 1 combination as parameters and check if the board has a winning combination 
         const isValid = (combinaison) => {
 
             if (board[combinaison[0]] == board[combinaison[0]]
@@ -57,6 +62,7 @@ const gameBoard = (() => {
             }
         }
         
+        //function that iterates on each of the winning combination
         winningCombinaison.forEach((element) => {
             const validate = isValid(element);
             if (validate == true) {
@@ -64,15 +70,18 @@ const gameBoard = (() => {
             }
         });
 
+        //if one of the cominantion is true, it returns true
         return boardWin;
     }
-        
+
+    //function that activate the tic-tac-toe grid and make the case clickable do the user    
     const activateBoard = () => {
         marker = player1;
         domElements.selectors('.case').forEach((element) => {
             element.addEventListener('click', () => {
                 const alert = domElements.selector('.alert');
 
+                //if the box clicked by the user has no marker on it
                 if (board[element.dataset.id] == null) {
 
                     alert.classList.remove('visible')
@@ -98,7 +107,7 @@ const gameBoard = (() => {
         })
     }
 
-    // Event listeners 
+    //event listner on start game buttons
     const playBtn = document.querySelectorAll('#start-button');
     playBtn.forEach(element => {
         element.addEventListener('click', createPlayers);
@@ -107,9 +116,10 @@ const gameBoard = (() => {
     return {createPlayers};
 })();
 
-
+//factory function that modify visuals on the page
 const displayController = (() => {
 
+    //function that creates the tic-tac-to grid
     const displayBoard = (number) => {
         domElements.selector('.tic-tac-grid').innerHTML = "";
         for (let i = 0; i < number; i++) {
@@ -117,6 +127,7 @@ const displayController = (() => {
         }
     }
 
+    //function that display a pop up box on the screen and highlight the winner of the game
     const gameDone = (winner) => {
         $(document).ready(function(){
             // Show the Modal on load
