@@ -10,13 +10,16 @@ const gameBoard = (() => {
     let player1;
     let player2;
     let marker;
-    const board = new Array(9);
+    let board;
 
     //initialise the two players and starts the game
     const createPlayers = () => {
+        board = new Array(9);
         player1 = Player('x');
         player2 = Player('o');
         
+        displayController.displayBoard(9);
+
         activateBoard();
     }
 
@@ -27,22 +30,69 @@ const gameBoard = (() => {
             marker = player1
         }
     }
+
+    const validateBoard = () => {
+        let boardWin = false;
+
+        const winningCombinaison = [
+            [0, 1, 2],
+            [0, 4, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [3, 4, 5],
+            [6, 7, 8],
+            [2, 4, 6]
+        ];
+
+        const isValid = (combinaison) => {
+
+            if (board[combinaison[0]] == board[combinaison[0]]
+                && board[combinaison[1]] == board[combinaison[0]]
+                && board[combinaison[2]] == board[combinaison[0]]
+                && board[combinaison[0]] != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        winningCombinaison.forEach((element) => {
+            const validate = isValid(element);
+            if (validate == true) {
+                boardWin = true;
+            }
+        });
+
+        return boardWin;
+    }
         
     const activateBoard = () => {
         marker = player1;
         domElements.selectors('.case').forEach((element) => {
             element.addEventListener('click', () => {
-                element.innerHTML = marker.getToken();
-                
-                updateMarker();
-                console.log('hello')
+
+                if (board[element.dataset.id] == null) {
+
+                    board[element.dataset.id] = marker;
+                    
+                    element.innerHTML = marker.getToken();
+
+                    if (validateBoard() == true) {
+                        displayController.gameDone(marker);
+                    }
+
+                    updateMarker();
+                }
             })
         })
     }
 
     // Event listeners 
-    const playBtn = document.getElementById('start-button');
-    playBtn.addEventListener('click', createPlayers);
+    const playBtn = document.querySelectorAll('#start-button');
+    playBtn.forEach(element => {
+        element.addEventListener('click', createPlayers);
+    })
 
     return {createPlayers};
 })();
@@ -51,12 +101,22 @@ const gameBoard = (() => {
 const displayController = (() => {
 
     const displayBoard = (number) => {
+        domElements.selector('.tic-tac-grid').innerHTML = "";
         for (let i = 0; i < number; i++) {
            domElements.append('.tic-tac-grid', domElements.div("case", i))
         }
     }
 
-    return {displayBoard}
+    const gameDone = (winner) => {
+        $(document).ready(function(){
+            // Show the Modal on load
+            $("#staticBackdrop").modal("show");
+        });
+
+        document.querySelector('.modal-body').innerHTML = `Les ${winner.getToken().toUpperCase()} ont gagné la partie!`;
+    }
+
+    return {displayBoard, gameDone}
 })();
 
 
@@ -88,4 +148,3 @@ const domElements = (() => {
 })();
 
 
-displayController.displayBoard(9);
