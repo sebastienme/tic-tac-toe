@@ -74,6 +74,23 @@ const gameBoard = (() => {
         return boardWin;
     }
 
+    const validateTie = () => {
+        let count = 0;
+        let isValid = false;
+        const check = (element) => {
+            count = count + 1;
+            return  count === 9;
+          }
+
+        board.forEach(element => {
+           if (check(element) == true) {
+            isValid = true;
+           }
+        })
+
+        return isValid;
+    }
+
     //function that activate the tic-tac-toe grid and make the case clickable do the user    
     const activateBoard = () => {
         marker = player1;
@@ -92,7 +109,10 @@ const gameBoard = (() => {
                     element.innerHTML = marker.getToken();
 
                     if (validateBoard() == true) {
-                        displayController.gameDone(marker);
+                        displayController.gameDone('win', marker.getToken());
+
+                    } else if (validateTie() == true) {
+                        displayController.gameDone('tie');
                     }
 
                     updateMarker();
@@ -128,13 +148,22 @@ const displayController = (() => {
     }
 
     //function that display a pop up box on the screen and highlight the winner of the game
-    const gameDone = (winner) => {
+    const gameDone = (result, text) => {
         $(document).ready(function(){
             // Show the Modal on load
             $("#staticBackdrop").modal("show");
         });
 
-        document.querySelector('.modal-body').innerHTML = `Les ${winner.getToken().toUpperCase()} ont gagné la partie!`;
+        if (result == 'win') {
+
+            document.querySelector('.modal-body').innerHTML = `Les ${text.toUpperCase()} ont gagné la partie!`;
+        
+        } else if (result == 'tie') {
+
+            document.querySelector('.modal-body').innerHTML = "Partie nulle!";
+            document.querySelector('#staticBackdropLabel').innerHTML = "Oops!"
+        }
+        
     }
 
     return {displayBoard, gameDone}
