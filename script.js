@@ -7,48 +7,44 @@ const Player = (token) => {
 
 
 const gameBoard = (() => {
-    
+    let player1;
+    let player2;
+    let marker;
     const board = new Array(9);
 
     //initialise the two players and starts the game
     const createPlayers = () => {
-        const player1 = Player('x');
-        const player2 = Player('o');
-        playerTurn(player1, player2)
+        player1 = Player('x');
+        player2 = Player('o');
+        
+        activateBoard();
     }
 
-    const playerTurn = (currentPlayer, nextPlayer) => {
-        const token = currentPlayer.getToken();
-
+    const updateMarker = () => {
+        if (marker == player1) {
+            marker = player2
+        } else {
+            marker = player1
+        }
+    }
+        
+    const activateBoard = () => {
+        marker = player1;
         domElements.selectors('.case').forEach((element) => {
             element.addEventListener('click', () => {
-                if (element.innerHTML == "") {
-                    element.innerHTML = token;
-                    board[element.dataset.id] = token;
-                    validateBoard(nextPlayer, currentPlayer);
-                    console.log(board)
-                } else {
-                    console.log("alert")
-                    const alert = domElements.selector('.alert');
-                    alert.innerHTML = 'Choisis une autre case';
-                    alert.classList.remove('invisible')
-                }
+                element.innerHTML = marker.getToken();
+                
+                updateMarker();
+                console.log('hello')
             })
         })
-    }
-
-    const validateBoard = (currentPlayer, nextPlayer) => {
-        
-        
-        
-        playerTurn(currentPlayer, nextPlayer)
     }
 
     // Event listeners 
     const playBtn = document.getElementById('start-button');
     playBtn.addEventListener('click', createPlayers);
 
-    return {};
+    return {createPlayers};
 })();
 
 
