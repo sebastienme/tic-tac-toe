@@ -74,6 +74,7 @@ const gameBoard = (() => {
         return boardWin;
     }
 
+    //function that validate if the game is a tie. If the check() function has a count of 9, that means the game is tie
     const validateTie = () => {
         let count = 0;
         let isValid = false;
@@ -156,12 +157,13 @@ const displayController = (() => {
 
         if (result == 'win') {
 
-            document.querySelector('.modal-body').innerHTML = `Les ${text.toUpperCase()} ont gagné la partie!`;
+            document.querySelector('.modal-body').innerHTML = `Les ${text.toUpperCase()} ont gagnés la partie!`;
+            document.querySelector('#staticBackdropLabel').innerHTML = "Bravo!";
         
         } else if (result == 'tie') {
 
             document.querySelector('.modal-body').innerHTML = "Partie nulle!";
-            document.querySelector('#staticBackdropLabel').innerHTML = "Oops!"
+            document.querySelector('#staticBackdropLabel').innerHTML = "Oops!";
         }
         
     }
@@ -191,8 +193,6 @@ const domElements = (() => {
 
     //select elements
     const selectors = (element) => document.querySelectorAll(element);
-
-
 
     return {div, append, selector, selectors};
 })();
