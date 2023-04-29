@@ -71,8 +71,12 @@ const gameBoard = (() => {
         marker = player1;
         domElements.selectors('.case').forEach((element) => {
             element.addEventListener('click', () => {
+                const alert = domElements.selector('.alert');
 
                 if (board[element.dataset.id] == null) {
+
+                    alert.classList.remove('visible')
+                    alert.classList.add('invisible')
 
                     board[element.dataset.id] = marker;
                     
@@ -83,6 +87,12 @@ const gameBoard = (() => {
                     }
 
                     updateMarker();
+
+                } else {
+        
+                    alert.innerHTML = 'Choisis une autre case';
+
+                    alert.classList.remove('invisible')
                 }
             })
         })

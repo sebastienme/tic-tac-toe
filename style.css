@@ -107,7 +107,7 @@ nav {
 
 .case:hover {
     cursor: pointer;
-    background-color: rgb(143, 191, 255);
+    background-color: rgb(240, 240, 240);
 }
 
 .case:nth-child(1), .case:nth-child(2), .case:nth-child(3){
